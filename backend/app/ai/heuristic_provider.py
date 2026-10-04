@@ -27,11 +27,35 @@ class HeuristicProvider(AIProvider):
             if candidate in query:
                 pet_name = candidate.title()
 
-        medical_terms = ("teşhis", "diagnose", "prescription", "reçete", "hastalık", "disease")
+        medical_terms = (
+            "teşhis",
+            "diagnose",
+            "prescription",
+            "reçete",
+            "recete",
+            "hastalık",
+            "hastalik",
+            "disease",
+            "kus",
+            "ateş",
+            "ates",
+            "ishal",
+            "ne ilaç",
+            "ne ilac",
+            "ilaç ver",
+            "ilac ver",
+            "hasta",
+            "ağrı",
+            "agri",
+            "sick",
+            "vomit",
+            "fever",
+        )
         if any(term in query for term in medical_terms):
             return ChatTurn(
-                "I am not a veterinarian and I cannot diagnose or prescribe medication. "
-                "Please consult your vet for medical advice. I can help you review records already saved in PetCare.",
+                "Ben bir veteriner hekim değilim (I am not a veterinarian) ve teşhis koyamam veya ilaç reçete edemem. "
+                "Lütfen evcil hayvanınızın sağlık durumu için bir veteriner kliniğine danışınız. "
+                "PetCare üzerinden sadece daha önce kaydedilmiş aşı, kilo, randevu ve bakım verilerinizi sorgulayabilirsiniz.",
                 used,
                 self.name,
             )

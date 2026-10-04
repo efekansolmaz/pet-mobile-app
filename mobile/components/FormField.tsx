@@ -30,7 +30,7 @@ export function FormField<T extends FieldValues>({
         <View style={styles.wrap}>
           <Text style={styles.label}>{label}</Text>
           <TextInput
-            value={value}
+            value={value !== undefined && value !== null ? String(value) : ''}
             onChangeText={onChange}
             onBlur={onBlur}
             placeholder={placeholder}

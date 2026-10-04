@@ -44,7 +44,7 @@ export default function TabsLayout() {
         name="assistant"
         options={{
           title: 'Assistant',
-          tabBarIcon: ({ color }) => <SymbolView name={{ ios: 'sparkles', android: 'auto-awesome', web: 'auto-awesome' }} tintColor={color} size={24} />,
+          tabBarIcon: ({ color }) => <SymbolView name={{ ios: 'sparkles', android: 'auto_awesome', web: 'auto_awesome' }} tintColor={color} size={24} />,
         }}
       />
     </Tabs>

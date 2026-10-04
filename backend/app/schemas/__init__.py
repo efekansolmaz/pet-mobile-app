@@ -290,8 +290,13 @@ class ChatRequest(BaseModel):
 
 class ChatResponse(BaseModel):
     reply: str
+    message: str | None = None
     provider: str
     used_tools: list[str] = []
+
+    def model_post_init(self, __context: object) -> None:
+        if self.message is None:
+            self.message = self.reply
 
 
 class DashboardOut(BaseModel):

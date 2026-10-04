@@ -1,3 +1,4 @@
+from contextlib import asynccontextmanager
 from pathlib import Path
 
 from fastapi import FastAPI
@@ -14,7 +15,16 @@ from app.db.session import engine
 from app.models import FeedingLog, Medication, NutritionPlan, Pet, Reminder, User, Vaccination, VeterinaryVisit, WeightRecord  # noqa: F401
 
 settings = get_settings()
-app = FastAPI(title=settings.app_name, version="1.0.0")
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    if settings.environment != "test":
+        Base.metadata.create_all(bind=engine)
+    yield
+
+
+app = FastAPI(title=settings.app_name, version="1.0.0", lifespan=lifespan)
 origins = settings.cors_origin_list
 app.add_middleware(
     CORSMiddleware,
@@ -33,12 +43,6 @@ app.include_router(assistant_router, prefix=prefix)
 upload_path = Path(settings.upload_dir)
 upload_path.mkdir(parents=True, exist_ok=True)
 app.mount("/uploads", StaticFiles(directory=str(upload_path)), name="uploads")
-
-
-@app.on_event("startup")
-def on_startup() -> None:
-    if settings.environment != "test":
-        Base.metadata.create_all(bind=engine)
 
 
 @app.get("/health")

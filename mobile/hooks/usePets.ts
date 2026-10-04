@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
 import { endpoints } from '@/services/api';
@@ -16,8 +17,12 @@ export function useSelectedPet() {
   const selectedPetId = usePetStore((state) => state.selectedPetId);
   const setSelectedPetId = usePetStore((state) => state.setSelectedPetId);
   const pet = pets.data?.find((item) => item.id === selectedPetId) ?? pets.data?.[0] ?? null;
-  if (pet && pet.id !== selectedPetId) {
-    setSelectedPetId(pet.id);
-  }
+
+  useEffect(() => {
+    if (pet && pet.id !== selectedPetId) {
+      setSelectedPetId(pet.id);
+    }
+  }, [pet, selectedPetId, setSelectedPetId]);
+
   return { ...pets, pet };
 }

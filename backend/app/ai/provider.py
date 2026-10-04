@@ -47,6 +47,15 @@ def build_provider(settings: Settings) -> AIProvider:
             base_url="https://api.anthropic.com/v1",
             name="anthropic",
         )
+    if provider == "gemini" and settings.gemini_api_key:
+        from app.ai.openai_provider import OpenAICompatibleProvider
+
+        return OpenAICompatibleProvider(
+            api_key=settings.gemini_api_key,
+            model="gemini-2.0-flash",
+            base_url="https://generativelanguage.googleapis.com/v1beta/openai",
+            name="gemini",
+        )
     if provider == "ollama":
         from app.ai.openai_provider import OpenAICompatibleProvider
 
