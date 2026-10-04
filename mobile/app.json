@@ -1,22 +1,37 @@
 {
   "expo": {
-    "name": "mobile",
-    "slug": "mobile",
+    "name": "PetCare",
+    "slug": "petcare-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "mobile",
+    "scheme": "petcare",
     "userInterfaceStyle": "automatic",
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.petcare.mobileapp",
+      "buildNumber": "1",
+      "infoPlist": {
+        "NSCameraUsageDescription": "PetCare needs access to your camera to take photos of your pets and medical documents.",
+        "NSPhotoLibraryUsageDescription": "PetCare needs access to your photo library to select pet profile pictures and vaccination records."
+      }
     },
     "android": {
+      "package": "com.petcare.mobileapp",
+      "versionCode": 1,
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
+        "backgroundColor": "#1F6F5B",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
         "backgroundImage": "./assets/images/android-icon-background.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
+      "permissions": [
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE",
+        "RECEIVE_BOOT_COMPLETED",
+        "VIBRATE"
+      ],
       "predictiveBackGestureEnabled": false
     },
     "web": {
@@ -31,10 +46,16 @@
         {
           "image": "./assets/images/splash-icon.png",
           "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "backgroundColor": "#F6F3EE"
         }
       ],
-      "expo-secure-store"
+      "expo-secure-store",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you set pet avatars and upload vaccine cards."
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
