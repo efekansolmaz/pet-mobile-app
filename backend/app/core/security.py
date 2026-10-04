@@ -2,10 +2,17 @@ from datetime import datetime, timedelta, timezone
 from typing import Any, Literal
 from uuid import UUID
 
+import bcrypt
 from jose import JWTError, jwt
 from passlib.context import CryptContext
 
 from app.core.config import get_settings
+
+# Passlib compat for bcrypt >= 4.0
+if not hasattr(bcrypt, "__about__"):
+    class _About:
+        __version__ = getattr(bcrypt, "__version__", "4.0.0")
+    bcrypt.__about__ = _About()
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 TokenType = Literal["access", "refresh"]
